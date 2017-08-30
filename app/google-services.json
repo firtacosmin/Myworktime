@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "910942999156",
+    "firebase_url": "https://myworktime-7efd9.firebaseio.com",
+    "project_id": "myworktime-7efd9",
+    "storage_bucket": "myworktime-7efd9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910942999156:android:07537d20999765d0",
+        "android_client_info": {
+          "package_name": "com.fcc.myworktime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "910942999156-gl6gsk438k9sqvuu0dkt0gpefhvss02d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fcc.myworktime",
+            "certificate_hash": "afc4dcf3a443345c40e73415a3cba48a6d898f2a"
+          }
+        },
+        {
+          "client_id": "910942999156-gmmvbepthbnrpocoa9jmeoubjvjtl752.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFoafJWTCRDIkowuWJxr2eYzXuJfCvGf0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "910942999156-gmmvbepthbnrpocoa9jmeoubjvjtl752.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
