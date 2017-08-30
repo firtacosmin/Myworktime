@@ -12,7 +12,8 @@ import dagger.Provides
  */
 
 @Module(includes = arrayOf(
-        FirebaseModule::class))
+        FirebaseModule::class,
+        UserDataModule::class))
 class AppModule {
 
     @AppScope
