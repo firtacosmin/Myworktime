@@ -3,6 +3,7 @@ package com.fcc.myworktime.di
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import android.support.annotation.Nullable
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
@@ -26,7 +27,7 @@ object AppInjector {
 
         mainApp.registerActivityLifecycleCallbacks(
                 object : Application.ActivityLifecycleCallbacks {
-                    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle) {
+                    override fun onActivityCreated(activity: Activity, @Nullable savedInstanceState: Bundle?) {
                         handleActivity(activity)
                     }
 
@@ -63,7 +64,7 @@ object AppInjector {
         (activity as? FragmentActivity)?.supportFragmentManager?.registerFragmentLifecycleCallbacks(
                 object : FragmentManager.FragmentLifecycleCallbacks() {
                     override fun onFragmentCreated(fm: FragmentManager?, f: Fragment?,
-                                                   savedInstanceState: Bundle?) {
+                                                   @Nullable savedInstanceState: Bundle?) {
                         if (f is Injectable) {
                             AndroidSupportInjection.inject(f)
                         }

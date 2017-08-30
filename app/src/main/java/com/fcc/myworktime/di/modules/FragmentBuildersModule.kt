@@ -1,6 +1,8 @@
 package com.fcc.myworktime.di.modules
 
 import com.fcc.myworktime.MainActivityFragment
+import com.fcc.myworktime.ui.login.LoginFragment
+import com.fcc.myworktime.ui.projects.ProjectsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -11,13 +13,15 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class FragmentBuildersModule {
 
-//    @ContributesAndroidInjector
-//    internal abstract fun contributeLoginFragment(): LoginFragment
+    @ContributesAndroidInjector
+    internal abstract fun contributeLoginFragment(): LoginFragment
 
 //    @ContributesAndroidInjector
 //    internal abstract fun contributeRegistrationUserFragment(): RegistrationUserFragment
 
 
+    @ContributesAndroidInjector
+    internal abstract fun contributeProjectsFragment():ProjectsFragment
 
     @ContributesAndroidInjector
     internal abstract fun contributeTestFragment(): MainActivityFragment

@@ -2,6 +2,7 @@ package com.fcc.myworktime
 
 import android.support.v4.app.Fragment
 import android.os.Bundle
+import android.support.annotation.Nullable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ class MainActivityFragment : Fragment() {
         return v
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         text.text = "custom text"
     }
