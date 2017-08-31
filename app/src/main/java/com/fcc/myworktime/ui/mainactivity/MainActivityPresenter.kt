@@ -31,7 +31,9 @@ class MainActivityPresenter @Inject constructor(
         this.view = view
         subscriptions.add(view.viewEvent().subscribe { eventData -> viewEventCalled(eventData) })
         subscriptions.add(view.menuEvent().subscribe{ menuEvent -> menuSelected(menuEvent) })
+        subscriptions.add(uData.getUserChangesObservable().subscribe { userDataChanged() })
     }
+
 
     private fun viewEventCalled(eventData: EventData) {
 
@@ -67,6 +69,15 @@ class MainActivityPresenter @Inject constructor(
                 view.hideMenu()
             }
         }
+    }
+
+
+    private fun userDataChanged() {
+
+        if ( uData.loggedIn() ){
+            view.displayMenu()
+        }
+
     }
 
 
