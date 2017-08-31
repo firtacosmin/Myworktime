@@ -12,4 +12,7 @@ class Messages @Inject constructor(
 ) {
 
     val loginErrorMessage:String? = c.getString(R.string.login_error)
+    val no_projects_message: String? = c.getString(R.string.no_project_message)
+    val error_getting_projects: String? = c.getString(R.string.error_getting_projects)
+    val error_project_name_empty: String? = c.getString(R.string.error_project_name_empty)
 }

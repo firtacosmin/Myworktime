@@ -18,7 +18,7 @@ class UserDataModule {
     @Provides
     @AppScope
     fun provideUData(auth: Auth, userDAO: UserDAO, projectsDAO: ProjectsDAO): UserData {
-        return UserData(auth, userDAO, projectsDAO)
+        return UserData(auth)
     }
 
 }

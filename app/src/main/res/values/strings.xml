@@ -9,4 +9,10 @@
     <string name="register">Register</string>
     <string name="login_error">Error trying to login. Please retry</string>
     <string name="action_logout">Logout</string>
+    <string name="no_project_message">You have no projects. Please add some!</string>
+    <string name="error_getting_projects">Some unknown error occurred while getting the projects. \nPlease try again later!</string>
+    <string name="txt_enter_name_project">Enter the name of the project</string>
+    <string name="add_project">Add project</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_project_name_empty">The project name should not be empty</string>
 </resources>

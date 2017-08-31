@@ -10,6 +10,9 @@ interface MainView {
     companion object {
         val EVENT_CREATED = "EVENT_CREATED"
         val EVENT_DESTROYED = "EVENT_DESTROYED"
+        val EVENT_PAUSED = "EVENT_PAUSED"
+        val EVENT_RESUMED = "EVENT_RESUMED"
+        val EVENT_ACTIVITY_ATTACHED = "EVENT_ACTIVITY_ATTACHED"
     }
 
     fun viewEvent(): Observable<EventData>

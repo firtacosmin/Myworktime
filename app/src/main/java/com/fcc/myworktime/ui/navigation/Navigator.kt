@@ -6,6 +6,7 @@ import com.fcc.myworktime.MainActivity
 import com.fcc.myworktime.R
 import com.fcc.myworktime.ui.login.LoginFragment
 import com.fcc.myworktime.ui.projects.ProjectsFragment
+import com.fcc.myworktime.ui.projects.addproject.ProjectsAddDialog
 import com.fcc.myworktime.ui.registration.RegistrationFragment
 import javax.inject.Inject
 
@@ -30,6 +31,10 @@ class Navigator @Inject constructor(act: MainActivity){
 
     fun goToRegistration(){
         openFragment(RegistrationFragment())
+    }
+
+    fun openAddProjectDialog(){
+        ProjectsAddDialog().show(fManager, "")
     }
 
 

@@ -2,13 +2,16 @@ package com.fcc.myworktime.ui.mainactivity
 
 import android.os.Bundle
 import com.fcc.myworktime.data.Auth
+import com.fcc.myworktime.data.UserDAO
 import com.fcc.myworktime.data.UserData
+import com.fcc.myworktime.data.database.User
 import com.fcc.myworktime.ui.navigation.Navigator
 import com.fcc.myworktime.ui.utils.EventData
 import com.fcc.myworktime.ui.utils.MainView
+import com.fcc.myworktime.utils.Resource
 import javax.inject.Inject
 import io.reactivex.disposables.CompositeDisposable
-
+import io.reactivex.disposables.Disposable
 
 
 /**
@@ -16,15 +19,18 @@ import io.reactivex.disposables.CompositeDisposable
  *The presenter that will communicate with the activity
  */
 class MainActivityPresenter @Inject constructor(
-        var navigator:Navigator,
-        var uData: UserData,
-        var auth: Auth
+        val navigator:Navigator,
+        val uData: UserData,
+        val auth: Auth,
+        val userDAO: UserDAO
 ){
 
     private lateinit var view:MainActivityView
 
 
     private val subscriptions = CompositeDisposable()
+    private lateinit var dbUserDisposable: Disposable
+
 
 
     fun bindView(view:MainActivityView){
@@ -49,6 +55,7 @@ class MainActivityPresenter @Inject constructor(
 
         if ( menuEvent.event == MainActivityView.LOGOUT_MENU ){
             auth.logout()
+            uData.logout()
             navigator.goToLogin()
             view.hideMenu()
         }
@@ -62,13 +69,34 @@ class MainActivityPresenter @Inject constructor(
     private fun viewCreated(bundle: Bundle?) {
         if ( bundle == null ){
             if ( uData.loggedIn() ){
-                navigator.goToProjects()
-                view.displayMenu()
+                if ( uData.dbUser == null ){
+                    /*if there is no dbUser then get it*/
+                    dbUserDisposable = userDAO.getUser(uData.getEmail()).subscribe({ user ->
+                        gotDataFromDb(user)
+                    })
+                }else {
+                    navigator.goToProjects()
+                    view.displayMenu()
+                }
             }else{
                 navigator.goToLogin()
                 view.hideMenu()
             }
         }
+    }
+
+    private fun gotDataFromDb(userRes: Resource<User>) {
+        if (userRes.status == Resource.Status.SUCCESS) {
+            uData.dbUser = userRes.data!!
+            navigator.goToProjects()
+            view.displayMenu()
+        }else {
+            /*will log user out first*/
+            auth.logout()
+            navigator.goToLogin()
+            view.hideMenu()
+        }
+        dbUserDisposable.dispose()
     }
 
 

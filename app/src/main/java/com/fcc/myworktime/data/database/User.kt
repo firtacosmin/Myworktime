@@ -9,5 +9,5 @@ import com.google.firebase.database.IgnoreExtraProperties
 @IgnoreExtraProperties
 class User ( ){
     var email:String = ""
-    var id:Long = 0L
+    var id:String = ""
 }
