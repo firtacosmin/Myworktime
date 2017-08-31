@@ -7,6 +7,7 @@ import com.google.firebase.database.IgnoreExtraProperties
  * The plain Kotlin class that describes an User
  */
 @IgnoreExtraProperties
-class User ( var email:String ){
-    var id:String = ""
+class User ( ){
+    var email:String = ""
+    var id:Long = 0L
 }

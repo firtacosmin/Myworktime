@@ -30,5 +30,11 @@ constructor(private val fireAuth: FirebaseAuth) {
     val currentUser: FirebaseUser?
         get() = fireAuth.currentUser
 
+    fun logout() {
+
+        fireAuth.signOut()
+
+    }
+
 
 }
