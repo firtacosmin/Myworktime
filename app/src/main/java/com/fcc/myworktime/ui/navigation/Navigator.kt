@@ -12,15 +12,12 @@ import javax.inject.Inject
  * Created by firta on 8/31/2017.
  * A class that will be used to navigate between screens
  */
-class Navigator @Inject constructor(){
+class Navigator @Inject constructor(act: MainActivity){
+
 
     val destinationID = R.id.main_frame
 
-    lateinit var fManager:FragmentManager
-
-    fun bindWithActivity(act:MainActivity){
-        fManager = act.supportFragmentManager
-    }
+    var fManager:FragmentManager = act.supportFragmentManager
 
     fun goToLogin(){
         openFragment(LoginFragment())
