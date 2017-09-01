@@ -21,4 +21,6 @@
     <string name="work_state_ended">Ended</string>
     <string name="work_button_text_end">End work</string>
     <string name="work_button_text_start">Start work</string>
+    <string name="remove_project_dialog_title">Remove project</string>
+    <string name="remove_project_dialog_message">Are you sure you want to remove all the elements of the project</string>
 </resources>

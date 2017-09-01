@@ -53,10 +53,19 @@ class ProjectsDAO @Inject constructor(@ProjectsDbRef val projectsDbRef: Database
 
     }
 
-    fun listenToProjectsUpdate(userID:String, listener:ChildEventListener){
-        projectsDbRef.child("projects").orderByChild("userid").equalTo(userID).addChildEventListener(listener)
+    fun removeProject( projectID: String, userID: String ){
+        projectsDbRef.child(userID).child(Project.DB_OBJECT_NAME).child(projectID).removeValue()
     }
 
+    fun updateProjectName(projectID: String, userID: String, projectname: String){
+        projectsDbRef
+                .child(userID)
+                .child(Project.DB_OBJECT_NAME)
+                .child(projectID)
+                .child(Project.DB_OBJECT_PROJECT_NAME_CHILD)
+                .setValue(projectname)
+
+    }
 
     fun getProjects(userID:String):Observable<Resource<Projects>>{
 

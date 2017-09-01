@@ -8,6 +8,7 @@ class Project {
 
     companion object {
         val DB_OBJECT_NAME = "projects"
+        val DB_OBJECT_PROJECT_NAME_CHILD = "name"
     }
 
     var name:String = ""

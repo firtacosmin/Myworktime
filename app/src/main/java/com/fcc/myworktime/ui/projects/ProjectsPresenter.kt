@@ -23,13 +23,43 @@ class ProjectsPresenter @Inject constructor(
     lateinit var view:ProjectsView
     private val subscriptions = CompositeDisposable()
 
+    private var positionToDelete:Int = -1
+
+    /**
+     * a copy of the elements that are displayed
+     */
+    private lateinit var displayedElements:List<String>
+
 
     fun bindView(v:ProjectsView){
         view = v
         subscriptions.add(v.projectClicked().subscribe { position -> clickedProject(position) })
-        subscriptions.add(v.observerFabClick().subscribe { _ -> fabClicked() })
+        subscriptions.add(v.observableFabClick().subscribe { _ -> fabClicked() })
         subscriptions.add(v.viewEvent().subscribe{eventData -> viewStateChange(eventData)})
         subscriptions.add(model.projectsObservable.subscribe{result -> gotData(result)})
+        subscriptions.add(v.observableDeleteItem().subscribe { position -> removeItem(position) })
+        subscriptions.add(v.observableEditItem().subscribe{position -> editItem(position)})
+        subscriptions.add(v.observableConfirmDlgOkClick().subscribe { removalConfirmed() })
+    }
+
+    private fun removalConfirmed() {
+        model.deleteProject(positionToDelete)
+        view.deleteItemAtPosition(positionToDelete)
+        if ( model.getDataSize() == 0){
+            view.displayMessage(messages.no_projects_message!!)
+        }
+
+    }
+
+    private fun editItem(position: Int) {
+
+
+    }
+
+    private fun removeItem(position: Int) {
+        positionToDelete = position
+        view.displayConfirmationDlg(messages.remove_project_dialog_tile!!, messages.remove_project_dialog_message!!+displayedElements[position])
+
 
     }
 
@@ -49,8 +79,9 @@ class ProjectsPresenter @Inject constructor(
                 view.hideLoading()
                 view.displayMessage(messages.no_projects_message!!)
             }else {
+                displayedElements = result.data
                 view.hideLoading()
-                view.displayList(result.data)
+                view.displayList(displayedElements)
                 view.displayFab()
             }
         }else {

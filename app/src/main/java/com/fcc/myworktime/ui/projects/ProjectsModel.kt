@@ -44,6 +44,15 @@ class ProjectsModel @Inject constructor(
 
         return projectsObservable
     }
+    fun deleteProject(position: Int){
+        val projID = getProjectID(position)
+        projDAO.removeProject(projID, uData.dbUser!!.id)
+
+    }
+
+    fun getDataSize():Int{
+        return uData.dbProjects!!.projects.size
+    }
 
     private fun gotProjects(projectsRes: Resource<Projects>) {
         when {
@@ -66,9 +75,6 @@ class ProjectsModel @Inject constructor(
 
     }
 
-
-
-
     private fun createListFromProjects(projects:Projects):List<String>{
         lastReturnedList = projects.projects
                 .map { it.value.name }
@@ -88,6 +94,7 @@ class ProjectsModel @Inject constructor(
         }
 
     }
+
 
     fun getProjectID(position: Int): String {
 

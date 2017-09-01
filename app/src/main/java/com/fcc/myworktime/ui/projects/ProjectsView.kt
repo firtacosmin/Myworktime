@@ -10,7 +10,10 @@ import io.reactivex.Observable
 interface ProjectsView : MainView {
 
     fun projectClicked():Observable<Int>
-    fun observerFabClick(): Observable<Any>
+    fun observableFabClick(): Observable<Any>
+    fun observableConfirmDlgOkClick(): Observable<Any>
+    fun observableDeleteItem():Observable<Int>
+    fun observableEditItem():Observable<Int>
 
 
     fun displayLoading()
@@ -19,6 +22,9 @@ interface ProjectsView : MainView {
     fun displayList(items:List<String>)
     fun addProject(title:String)
     fun displayFab()
+    fun deleteItemAtPosition(position:Int)
+
+    fun displayConfirmationDlg(title:String, message:String)
 
 
 }
