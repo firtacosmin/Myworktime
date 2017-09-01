@@ -9,12 +9,14 @@ import io.reactivex.Observable
 interface DetailsView:MainView {
 
     fun switchStateClickObservable():Observable<Any>
-
+    fun deleteClickedObservable():Observable<Int>
+    fun editClickedObservable():Observable<Int>
 
     fun displayState(state:String)
     fun displayButtonText(text:String)
     fun listItems(items :List<String>)
     fun addItemToList(item:String)
-    fun updateLastItem(newItem: String)
+    fun updateFirstElement(newItem: String)
+    fun removeItem(position:Int)
 
 }

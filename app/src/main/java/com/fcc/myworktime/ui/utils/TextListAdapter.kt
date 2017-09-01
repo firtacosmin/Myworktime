@@ -19,6 +19,9 @@ class TextListAdapter : RecyclerView.Adapter<TextListAdapter.ProjectListItemView
 
     private var itemList:MutableList<String> = ArrayList()
     val itemClickedEvent = PublishSubject.create<Int>()!!
+    val deleteClickedEvent = PublishSubject.create<Int>()!!
+    val editClickedEvent = PublishSubject.create<Int>()!!
+
 
 
 
@@ -37,7 +40,10 @@ class TextListAdapter : RecyclerView.Adapter<TextListAdapter.ProjectListItemView
     override fun onBindViewHolder(holder: ProjectListItemViewHolder?, position: Int) {
 
         holder?.setText(itemList[position])
-        RxView.clicks(holder!!.itemView).subscribe({itemClickedEvent.onNext(position)})
+        RxView.clicks(holder!!.itemView).subscribe{itemClickedEvent.onNext(position)}
+        RxView.clicks(holder.binding.imgDelete).subscribe{deleteClickedEvent.onNext(position)}
+        RxView.clicks(holder.binding.imgEdit).subscribe{editClickedEvent.onNext(position)}
+
 
     }
 
@@ -66,5 +72,21 @@ class TextListAdapter : RecyclerView.Adapter<TextListAdapter.ProjectListItemView
     fun updateLastItem(newItem: String) {
         itemList[itemCount - 1] = newItem
         notifyItemChanged(itemCount - 1)
+    }
+
+    fun updateFirstItem(newItem:String){
+        itemList[0] = newItem
+        notifyItemChanged(0)
+    }
+    fun addItemInFront(newItem:String){
+        itemList.add(0, newItem)
+        notifyItemInserted(0)
+    }
+
+    fun removeItem(position: Int) {
+
+        itemList.removeAt(position)
+        notifyItemRemoved(position)
+
     }
 }

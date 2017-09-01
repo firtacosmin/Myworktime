@@ -5,6 +5,7 @@ import com.fcc.myworktime.data.UserData
 import com.fcc.myworktime.data.WorkDAO
 import com.fcc.myworktime.data.database.Work
 import com.fcc.myworktime.utils.Consts
+import com.fcc.myworktime.utils.Utils
 import javax.inject.Inject
 
 /**
@@ -20,7 +21,9 @@ class DetailsModel @Inject constructor(
 
     fun getListOfWork():List<String>{
         return uData.dbProjects!!.projects[projectID]!!.work
+                .toSortedMap(compareByDescending<String>{it})
                 .map { createString(it.value) }
+
     }
 
     fun getDataFromBundle(data: Bundle) {
@@ -60,9 +63,20 @@ class DetailsModel @Inject constructor(
 
     }
 
+    fun deleteWorkAt(position: Int) {
+
+        val workMap = uData.dbProjects!!.projects[projectID]!!.work
+        val idInList = getIdOfPosition(position)
+        workMap.remove(idInList)
+        addWorkMapToDAO()
+
+    }
+
+
     private fun getLastWork(): Work? {
          val map = uData.dbProjects!!.projects[projectID]!!.work
                 .toSortedMap()
+
         if ( map.isEmpty() ){
             return null
         }else {
@@ -70,9 +84,22 @@ class DetailsModel @Inject constructor(
             return uData.dbProjects!!.projects[projectID]!!.work[lastKey]
         }
     }
+    private fun getIdOfPosition(position: Int): String {
 
+        var id = ""
+        val map = uData.dbProjects!!.projects[projectID]!!.work
+                .toSortedMap(compareByDescending<String>{it})
+        map.keys.forEachIndexed { index, s ->
+            if ( index == position ){
+                id = s
+            }
+        }
+
+        return id
+
+    }
     private fun createString(work:Work):String{
-        return "${work.start}-${work.end}"
+        return "${Utils.getDate(work.start)}\n-\n${Utils.getDate(work.end)}"
     }
 
     private fun addWorkToDAO(work:Work){
@@ -82,5 +109,11 @@ class DetailsModel @Inject constructor(
     private fun addFirstWorkToDAO(work: Work) {
         workDAO.addFirstWork(work,projectID,uData.dbUser!!.id )
     }
+
+    private fun addWorkMapToDAO(){
+        workDAO.saveNewWorkMap(uData.dbProjects!!.projects[projectID]!!.work, projectID, uData.dbUser!!.id)
+    }
+
+
 
 }

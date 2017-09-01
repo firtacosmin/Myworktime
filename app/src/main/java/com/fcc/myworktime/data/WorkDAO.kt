@@ -32,6 +32,10 @@ class WorkDAO @Inject constructor(
     fun addFirstWork(work:Work, projectID:String, userID:String){
         val workMap = HashMap<String, Work>()
         workMap.put(work.start.toString(), work)
+        saveNewWorkMap(workMap,projectID,userID)
+    }
+
+    fun saveNewWorkMap(workMap:Map<String,Work>, projectID: String, userID: String){
         projectsDbRef
                 .child(userID)
                 .child(Project.DB_OBJECT_NAME)

@@ -24,6 +24,14 @@ class DetailsPresenter @Inject constructor(
         view = v
         subscriptions.add(view.switchStateClickObservable().subscribe{switchStateClicked()})
         subscriptions.add(view.viewEvent().subscribe { viewState -> viewChangedState(viewState) })
+        subscriptions.add(view.deleteClickedObservable().subscribe { position -> deleteWorkOnPosition(position) })
+    }
+
+    private fun deleteWorkOnPosition(position: Int) {
+
+        model.deleteWorkAt(position)
+        view.removeItem(position)
+
     }
 
     private fun viewChangedState(viewState: EventData) {
@@ -43,7 +51,7 @@ class DetailsPresenter @Inject constructor(
 
         if ( model.isWorkStarted() ){
             val newItem:String = model.endWork()
-            view.updateLastItem(newItem)
+            view.updateFirstElement(newItem)
             view.displayState(messages.work_state_ended!!)
             view.displayButtonText(messages.work_btn_start!!)
         }else{

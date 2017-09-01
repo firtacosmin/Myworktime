@@ -43,11 +43,11 @@ class DetailsFragment: LifeCycleOwnerFragment(),DetailsView {
         val b = DataBindingUtil.inflate<FragmentDetailsBinding>(inflater, R.layout.fragment_details, container, false)
         binding = AutoClearedValue(this, b)
 
-        presenter.bindView(this)
 
         adapter = TextListAdapter()
         b.listWork.adapter = adapter
 
+        presenter.bindView(this)
 
         val eventBundle = Bundle()
         if ( savedInstanceState != null ) {
@@ -80,16 +80,29 @@ class DetailsFragment: LifeCycleOwnerFragment(),DetailsView {
         adapter.setItems(items)
 
     }
+    override fun removeItem(position: Int) {
+
+        adapter.removeItem(position)
+
+    }
 
     override fun addItemToList(item: String) {
-        adapter.addItem(item)
+        adapter.addItemInFront(item)
+        binding.get()!!.listWork.scrollToPosition(0)
     }
-    override fun updateLastItem(newItem: String) {
-        adapter.updateLastItem(newItem)
+    override fun updateFirstElement(newItem: String) {
+        adapter.updateFirstItem(newItem)
 
     }
 
     override fun viewEvent(): Observable<EventData> {
         return lifeCycleEvents
+    }
+    override fun editClickedObservable(): Observable<Int> {
+        return adapter.editClickedEvent
+    }
+
+    override fun deleteClickedObservable(): Observable<Int> {
+        return adapter.deleteClickedEvent
     }
 }
