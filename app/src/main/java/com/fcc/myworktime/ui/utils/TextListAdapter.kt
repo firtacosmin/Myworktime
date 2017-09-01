@@ -1,12 +1,11 @@
-package com.fcc.myworktime.ui.projects
+package com.fcc.myworktime.ui.utils
 
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.fcc.myworktime.R
-import com.fcc.myworktime.databinding.ProjectsListItemBinding
+import com.fcc.myworktime.databinding.ListItemProjectsBinding
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.subjects.PublishSubject
 
@@ -16,7 +15,7 @@ import io.reactivex.subjects.PublishSubject
  * Created by firta on 8/31/2017.
  * The adapter for the [RecyclerView] that will contain the projects
  */
-class ProjectListAdapter: RecyclerView.Adapter<ProjectListAdapter.ProjectListItemViewHolder>() {
+class TextListAdapter : RecyclerView.Adapter<TextListAdapter.ProjectListItemViewHolder>() {
 
     var itemList:MutableList<String> = ArrayList()
     val itemClickedEvent = PublishSubject.create<Int>()
@@ -43,7 +42,7 @@ class ProjectListAdapter: RecyclerView.Adapter<ProjectListAdapter.ProjectListIte
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ProjectListItemViewHolder {
-        val binding = DataBindingUtil.inflate<ProjectsListItemBinding>(LayoutInflater.from(parent?.context), R.layout.projects_list_item, parent, false)
+        val binding = DataBindingUtil.inflate<ListItemProjectsBinding>(LayoutInflater.from(parent?.context), R.layout.list_item_projects, parent, false)
         return ProjectListItemViewHolder(binding)
     }
 
@@ -56,7 +55,7 @@ class ProjectListAdapter: RecyclerView.Adapter<ProjectListAdapter.ProjectListIte
      * The [RecyclerView.ViewHolder] for the list of projects
      */
     class ProjectListItemViewHolder(
-            var binding: ProjectsListItemBinding
+            var binding: ListItemProjectsBinding
     ): RecyclerView.ViewHolder(binding.root) {
 
         fun setText(text:String){

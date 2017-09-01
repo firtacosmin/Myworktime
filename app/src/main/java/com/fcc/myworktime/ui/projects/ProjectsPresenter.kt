@@ -1,8 +1,10 @@
 package com.fcc.myworktime.ui.projects
 
+import android.os.Bundle
 import com.fcc.myworktime.ui.navigation.Navigator
 import com.fcc.myworktime.ui.utils.EventData
 import com.fcc.myworktime.ui.utils.MainView
+import com.fcc.myworktime.utils.Consts
 import com.fcc.myworktime.utils.Messages
 import com.fcc.myworktime.utils.Resource
 import io.reactivex.disposables.CompositeDisposable
@@ -35,8 +37,8 @@ class ProjectsPresenter @Inject constructor(
         if (eventData.event == MainView.EVENT_DESTROYED){
             viewDestroyed()
         } else if ( eventData.event == MainView.EVENT_ACTIVITY_ATTACHED ){
-            model.getProjects()
             view.displayLoading()
+            model.getProjects()
         }
     }
 
@@ -71,6 +73,11 @@ class ProjectsPresenter @Inject constructor(
     }
 
     private fun clickedProject(position: Int) {
+
+        val project:String = model.getProjectID(position)
+        val data = Bundle()
+        data.putString(Consts.DETAILS_DISPLAYED_PROJECT_ID, project)
+        navigator.openProjectDetails(data)
 
     }
 

@@ -1,10 +1,12 @@
 package com.fcc.myworktime.ui.navigation
 
+import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import com.fcc.myworktime.MainActivity
 import com.fcc.myworktime.R
 import com.fcc.myworktime.ui.login.LoginFragment
+import com.fcc.myworktime.ui.projectdetails.DetailsFragment
 import com.fcc.myworktime.ui.projects.ProjectsFragment
 import com.fcc.myworktime.ui.projects.addproject.ProjectsAddDialog
 import com.fcc.myworktime.ui.registration.RegistrationFragment
@@ -37,11 +39,18 @@ class Navigator @Inject constructor(act: MainActivity){
         ProjectsAddDialog().show(fManager, "")
     }
 
+    fun openProjectDetails(data: Bundle) {
+
+        val f = DetailsFragment.getInstance(data)
+        openFragment(f)
+
+    }
 
     private fun openFragment(f:Fragment){
         fManager.beginTransaction()
                 .replace(destinationID,f)
                 .commit()
     }
+
 
 }

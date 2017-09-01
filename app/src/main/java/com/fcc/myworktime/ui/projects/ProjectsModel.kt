@@ -28,6 +28,7 @@ class ProjectsModel @Inject constructor(
 
     var disposable:Disposable = uData.getProjectChangesObservable().subscribe { projectChanged() }
 
+    lateinit var lastReturnedList:List<String>
 
     fun clear(){
         disposable.dispose()
@@ -69,8 +70,9 @@ class ProjectsModel @Inject constructor(
 
 
     private fun createListFromProjects(projects:Projects):List<String>{
-        return projects.projects
+        lastReturnedList = projects.projects
                 .map { it.value.name }
+        return lastReturnedList
     }
 
     private fun projectChanged() {
@@ -84,6 +86,20 @@ class ProjectsModel @Inject constructor(
 
             }
         }
+
+    }
+
+    fun getProjectID(position: Int): String {
+
+        var projID:String = ""
+
+        uData.dbProjects!!.projects.forEach{
+            if ( it.value.name == lastReturnedList[position] ){
+                projID = it.value.id
+            }
+        }
+
+        return projID
 
     }
 

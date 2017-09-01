@@ -2,6 +2,7 @@ package com.fcc.myworktime.di.modules
 
 import com.fcc.myworktime.MainActivityFragment
 import com.fcc.myworktime.ui.login.LoginFragment
+import com.fcc.myworktime.ui.projectdetails.DetailsFragment
 import com.fcc.myworktime.ui.projects.ProjectsFragment
 import com.fcc.myworktime.ui.projects.addproject.ProjectsAddDialog
 import com.fcc.myworktime.ui.registration.RegistrationFragment
@@ -30,5 +31,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     internal abstract fun contributeProjectsAddDialogFragment(): ProjectsAddDialog
+
+    @ContributesAndroidInjector
+    internal abstract fun contributeDetailsFragment(): DetailsFragment
 }
 

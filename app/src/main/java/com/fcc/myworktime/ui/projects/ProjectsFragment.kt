@@ -11,6 +11,7 @@ import com.fcc.myworktime.databinding.FragmentProjectsBinding
 import com.fcc.myworktime.ui.utils.EventData
 import com.fcc.myworktime.ui.utils.LifeCycleOwnerFragment
 import com.fcc.myworktime.ui.utils.MainView
+import com.fcc.myworktime.ui.utils.TextListAdapter
 import com.fcc.myworktime.utils.AutoClearedValue
 import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.Observable
@@ -27,7 +28,7 @@ class ProjectsFragment: LifeCycleOwnerFragment(), ProjectsView {
 
     private lateinit var binding: AutoClearedValue<FragmentProjectsBinding>
     private var lifeCycleEvents = PublishSubject.create<EventData>()
-    private var adapter:ProjectListAdapter = ProjectListAdapter()
+    private var adapter: TextListAdapter = TextListAdapter()
 
     @Inject lateinit var presenter:ProjectsPresenter
 

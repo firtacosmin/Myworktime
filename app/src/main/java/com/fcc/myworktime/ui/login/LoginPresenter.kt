@@ -74,12 +74,10 @@ class LoginPresenter @Inject constructor(
 
     private fun loginResponse(loginData: Resource<String>) {
 
-        if ( loginData.status == Resource.Status.SUCCESS ){
-            loginSuccessful()
-        }else if ( loginData.status == Resource.Status.ERROR ){
-            loginWithError()
-        }else if ( loginData.status == Resource.Status.LOADING ){
-            printLoading()
+        when {
+            loginData.status == Resource.Status.SUCCESS -> loginSuccessful()
+            loginData.status == Resource.Status.ERROR -> loginWithError()
+            loginData.status == Resource.Status.LOADING -> printLoading()
         }
 
     }
