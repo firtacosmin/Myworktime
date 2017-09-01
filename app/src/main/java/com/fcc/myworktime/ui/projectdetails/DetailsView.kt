@@ -15,5 +15,6 @@ interface DetailsView:MainView {
     fun displayButtonText(text:String)
     fun listItems(items :List<String>)
     fun addItemToList(item:String)
+    fun updateLastItem(newItem: String)
 
 }

@@ -17,4 +17,8 @@
     <string name="error_project_name_empty">The project name should not be empty</string>
     <string name="start">Start</string>
     <string name="tap_again_to_exit_message">Tap again to exit the app</string>
+    <string name="work_state_started">Started</string>
+    <string name="work_state_ended">Ended</string>
+    <string name="work_button_text_end">End work</string>
+    <string name="work_button_text_start">Start work</string>
 </resources>

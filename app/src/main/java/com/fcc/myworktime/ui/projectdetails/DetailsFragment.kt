@@ -23,6 +23,7 @@ import javax.inject.Inject
 class DetailsFragment: LifeCycleOwnerFragment(),DetailsView {
 
 
+
     companion object {
         fun getInstance(data:Bundle):DetailsFragment{
             val f = DetailsFragment()
@@ -82,6 +83,10 @@ class DetailsFragment: LifeCycleOwnerFragment(),DetailsView {
 
     override fun addItemToList(item: String) {
         adapter.addItem(item)
+    }
+    override fun updateLastItem(newItem: String) {
+        adapter.updateLastItem(newItem)
+
     }
 
     override fun viewEvent(): Observable<EventData> {

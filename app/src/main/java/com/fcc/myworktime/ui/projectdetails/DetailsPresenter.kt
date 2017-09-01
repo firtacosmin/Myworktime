@@ -3,6 +3,7 @@ package com.fcc.myworktime.ui.projectdetails
 import android.os.Bundle
 import com.fcc.myworktime.ui.utils.EventData
 import com.fcc.myworktime.ui.utils.MainView
+import com.fcc.myworktime.utils.Messages
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -11,7 +12,8 @@ import javax.inject.Inject
  *
  */
 class DetailsPresenter @Inject constructor(
-        val model:DetailsModel
+        val model:DetailsModel,
+        val messages: Messages
 ) {
 
 
@@ -39,12 +41,30 @@ class DetailsPresenter @Inject constructor(
 
     private fun switchStateClicked() {
 
+        if ( model.isWorkStarted() ){
+            val newItem:String = model.endWork()
+            view.updateLastItem(newItem)
+            view.displayState(messages.work_state_ended!!)
+            view.displayButtonText(messages.work_btn_start!!)
+        }else{
+            val newItem:String = model.startWork()
+            view.addItemToList(newItem)
+            view.displayState(messages.work_state_started!!)
+            view.displayButtonText(messages.work_btn_end!!)
+        }
 
     }
 
     private fun printDataIntoView() {
         val dataToPrint = model.getListOfWork()
         view.listItems(dataToPrint)
+        if ( model.isWorkStarted() ){
+            view.displayState(messages.work_state_started!!)
+            view.displayButtonText(messages.work_btn_end!!)
+        }else{
+            view.displayState(messages.work_state_ended!!)
+            view.displayButtonText(messages.work_btn_start!!)
+        }
     }
 
 

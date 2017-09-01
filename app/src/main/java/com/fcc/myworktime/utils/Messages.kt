@@ -16,4 +16,8 @@ class Messages @Inject constructor(
     val error_getting_projects: String? = c.getString(R.string.error_getting_projects)
     val error_project_name_empty: String? = c.getString(R.string.error_project_name_empty)
     val tap_again_to_exit: String? = c.getString(R.string.tap_again_to_exit_message)
+    val work_state_started: String? = c.getString(R.string.work_state_started)
+    val work_state_ended: String? = c.getString(R.string.work_state_ended)
+    val work_btn_end: String? = c.getString(R.string.work_button_text_end)
+    val work_btn_start: String? = c.getString(R.string.work_button_text_start)
 }

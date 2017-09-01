@@ -17,8 +17,8 @@ import io.reactivex.subjects.PublishSubject
  */
 class TextListAdapter : RecyclerView.Adapter<TextListAdapter.ProjectListItemViewHolder>() {
 
-    var itemList:MutableList<String> = ArrayList()
-    val itemClickedEvent = PublishSubject.create<Int>()
+    private var itemList:MutableList<String> = ArrayList()
+    val itemClickedEvent = PublishSubject.create<Int>()!!
 
 
 
@@ -61,5 +61,10 @@ class TextListAdapter : RecyclerView.Adapter<TextListAdapter.ProjectListItemView
         fun setText(text:String){
             binding.infoText.text = text
         }
+    }
+
+    fun updateLastItem(newItem: String) {
+        itemList[itemCount - 1] = newItem
+        notifyItemChanged(itemCount - 1)
     }
 }
