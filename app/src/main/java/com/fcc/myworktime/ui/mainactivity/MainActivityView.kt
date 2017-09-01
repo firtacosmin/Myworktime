@@ -1,6 +1,5 @@
 package com.fcc.myworktime.ui.mainactivity
 
-import android.os.Bundle
 import com.fcc.myworktime.ui.utils.EventData
 import com.fcc.myworktime.ui.utils.MainView
 import io.reactivex.Observable
@@ -17,8 +16,11 @@ interface MainActivityView: MainView{
 
 
     fun menuEvent(): Observable<EventData>
+    fun backPressedEvent(): Observable<Any>
 
 
+    fun displayToast(text: String?)
+    fun finish()
     fun displayMenu()
     fun hideMenu()
 

@@ -42,15 +42,38 @@ class Navigator @Inject constructor(act: MainActivity){
     fun openProjectDetails(data: Bundle) {
 
         val f = DetailsFragment.getInstance(data)
-        openFragment(f)
+        openFragment(f, true)
+
+    }
+    /**
+     * will pop the fragment back stack
+     * If there are no elements in the backstack then will return false
+     * if something can be popped then it will be popped and will return true
+     */
+    fun onBackPressed():Boolean {
+
+        if ( fManager.backStackEntryCount > 0 ) {
+            popBackStack()
+            return true
+        }
+        return false
 
     }
 
-    private fun openFragment(f:Fragment){
-        fManager.beginTransaction()
+    private fun popBackStack() {
+        fManager.popBackStack()
+    }
+
+    private fun openFragment(f:Fragment, addToBackStack:Boolean = false){
+        val transaction = fManager.beginTransaction()
                 .replace(destinationID,f)
-                .commit()
+        if ( addToBackStack ){
+            transaction.addToBackStack(null)
+        }
+        transaction.commit()
     }
+
+
 
 
 }

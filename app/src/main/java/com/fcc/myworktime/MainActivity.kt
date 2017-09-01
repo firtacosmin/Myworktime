@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.EventLog
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.fcc.myworktime.data.UserData
 import com.fcc.myworktime.ui.mainactivity.MainActivityPresenter
 import com.fcc.myworktime.ui.mainactivity.MainActivityView
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainActivi
 
 
     private var lifeCycleEvents = PublishSubject.create<EventData>()
+    private var backPressedEvent = PublishSubject.create<Any>()
     private var menuEvents = PublishSubject.create<EventData>()
 
 
@@ -95,6 +97,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainActivi
         }
     }
 
+    override fun onBackPressed() {
+        backPressedEvent.onNext("")
+    }
+
     override fun viewEvent(): Observable<EventData> {
         return lifeCycleEvents
     }
@@ -110,5 +116,12 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector, MainActivi
     override fun hideMenu() {
         logoutMenuItem?.isVisible = false
         logoutMenuVisible = false
+    }
+    override fun backPressedEvent(): Observable<Any> {
+        return backPressedEvent
+    }
+
+    override fun displayToast(text: String?) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT ).show()
     }
 }
