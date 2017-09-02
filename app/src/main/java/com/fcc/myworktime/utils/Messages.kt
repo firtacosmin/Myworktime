@@ -22,4 +22,6 @@ class Messages @Inject constructor(
     val work_btn_start: String? = c.getString(R.string.work_button_text_start)
     val remove_project_dialog_tile: String? = c.getString(R.string.remove_project_dialog_title)
     val remove_project_dialog_message: String? = c.getString(R.string.remove_project_dialog_message)
+    val date_piker_title: String? = c.getString(R.string.date_piker_title)
+    val field_empty_error: String? = c.getString(R.string.field_empty_error)
 }

@@ -11,6 +11,7 @@ interface DetailsView:MainView {
     fun switchStateClickObservable():Observable<Any>
     fun deleteClickedObservable():Observable<Int>
     fun editClickedObservable():Observable<Int>
+    fun addClickedObservable():Observable<Any>
 
     fun displayState(state:String)
     fun displayButtonText(text:String)

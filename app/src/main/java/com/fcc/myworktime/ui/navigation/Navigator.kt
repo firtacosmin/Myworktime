@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import com.fcc.myworktime.MainActivity
 import com.fcc.myworktime.R
+import com.fcc.myworktime.ui.addwork.AddWorkFragment
 import com.fcc.myworktime.ui.login.LoginFragment
 import com.fcc.myworktime.ui.projectdetails.DetailsFragment
 import com.fcc.myworktime.ui.projects.ProjectsFragment
@@ -73,7 +74,10 @@ class Navigator @Inject constructor(act: MainActivity){
         transaction.commit()
     }
 
-
+    fun openAddWorkFragment(data: Bundle) {
+        val f = AddWorkFragment.getInstance(data)
+        openFragment(f, true)
+    }
 
 
 }

@@ -16,7 +16,7 @@ class DetailsModel @Inject constructor(
         val uData:UserData,
         val workDAO: WorkDAO
 ) {
-    private var projectID = ""
+    var projectID = ""
 
 
     fun getListOfWork():List<String>{

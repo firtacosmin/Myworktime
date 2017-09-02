@@ -9,5 +9,10 @@ class Work {
     var start:Long = 0L
     var end:Long = 0L
 
+    var activity:String = ""
+    var date:Long = 0L
+    var description:String = ""
+    var hours:Double = 0.0
+
 
 }

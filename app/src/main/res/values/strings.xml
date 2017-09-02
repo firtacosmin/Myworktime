@@ -23,4 +23,14 @@
     <string name="work_button_text_start">Start work</string>
     <string name="remove_project_dialog_title">Remove project</string>
     <string name="remove_project_dialog_message">Are you sure you want to remove all the elements of the project</string>
+    <string name="action_add_work">Add work</string>
+    <string name="description">Description</string>
+    <string name="hours">Hours</string>
+    <string name="activity">Activity</string>
+    <string name="project">Project</string>
+    <string name="date">Date</string>
+    <string name="action_ok">ok</string>
+    <string name="date_piker_title">Pick the date</string>
+    <string name="date_emtpy_error">The date field must not be empty</string>
+    <string name="field_empty_error">This field whould not be empty</string>
 </resources>
