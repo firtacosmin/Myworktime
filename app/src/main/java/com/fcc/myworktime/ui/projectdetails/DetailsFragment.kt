@@ -33,7 +33,6 @@ class DetailsFragment: LifeCycleOwnerFragment(),DetailsView {
 
 
     lateinit var binding :AutoClearedValue<FragmentDetailsBinding>
-    private val addClickEvent = PublishSubject.create<Any>()
     private var lifeCycleEvents = PublishSubject.create<EventData>()
     @Inject lateinit var  presenter : DetailsPresenter
 
@@ -43,7 +42,6 @@ class DetailsFragment: LifeCycleOwnerFragment(),DetailsView {
         val b = DataBindingUtil.inflate<FragmentDetailsBinding>(inflater, R.layout.fragment_details, container, false)
         binding = AutoClearedValue(this, b)
 
-        setHasOptionsMenu(true)
 
         adapter = TextListAdapter()
         b.listWork.adapter = adapter
@@ -60,22 +58,6 @@ class DetailsFragment: LifeCycleOwnerFragment(),DetailsView {
         return b.root
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu?, menuInflater: MenuInflater?) {
-        menuInflater!!.inflate(R.menu.menu_details, menu)
-        addMenu = menu!!.findItem(R.id.action_add)
-        super.onCreateOptionsMenu(menu, menuInflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item!!.itemId) {
-            R.id.action_add -> {
-                addClickEvent.onNext("")
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     override fun onDestroyView() {
         lifeCycleEvents.onNext(EventData(null, MainView.EVENT_DESTROYED))
@@ -121,7 +103,7 @@ class DetailsFragment: LifeCycleOwnerFragment(),DetailsView {
         return adapter.editClickedEvent
     }
     override fun addClickedObservable(): Observable<Any> {
-        return addClickEvent
+        return RxView.clicks(binding.get()!!.fab)
     }
 
     override fun deleteClickedObservable(): Observable<Int> {

@@ -22,12 +22,10 @@ import javax.inject.Inject
  * The fragment that will implement the [LoginView] for the login functionality
  */
 class LoginFragment:LoginView, LifeCycleOwnerFragment() {
-
-
-
     private var lifeCycleEvents = PublishSubject.create<EventData>()
-    private lateinit var binding:AutoClearedValue<FragmentLoginBinding>
 
+
+    private lateinit var binding:AutoClearedValue<FragmentLoginBinding>
     @Inject lateinit var presenter:LoginPresenter
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,18 +55,18 @@ class LoginFragment:LoginView, LifeCycleOwnerFragment() {
 
     }
 
-
     override fun observerLoginClick(): Observable<Any> {
         return RxView.clicks(binding.get()!!.btnLogin)
     }
 
+
     override fun observerRegisterClick(): Observable<Any> {
         return RxView.clicks(binding.get()!!.txtRegister)
     }
+
     override fun viewEvent(): Observable<EventData> {
         return  lifeCycleEvents
     }
-
     override fun getEmail(): String {
         return binding.get()!!.txtUsername.text.toString()
     }
@@ -81,6 +79,17 @@ class LoginFragment:LoginView, LifeCycleOwnerFragment() {
         hideLoading()
         binding.get()!!.txtError.text = loginErrorMessage
     }
+
+    override fun printPassError(s: String) {
+
+        binding.get()!!.layoutPassword.isErrorEnabled = true
+        binding.get()!!.layoutPassword.error = s
+    }
+
+    override fun printEmailError(s: String) {
+
+        binding.get()!!.layoutUsername.isErrorEnabled = true
+        binding.get()!!.layoutUsername.error = s    }
 
     override fun printLoading() {
         binding.get()!!.layoutUsername.visibility = View.INVISIBLE

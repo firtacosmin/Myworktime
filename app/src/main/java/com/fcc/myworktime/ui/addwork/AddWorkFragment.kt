@@ -2,10 +2,11 @@ package com.fcc.myworktime.ui.addwork
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.fcc.myworktime.R
 import com.fcc.myworktime.databinding.FragmentAddWorkBinding
-import com.fcc.myworktime.ui.projectdetails.DetailsFragment
 import com.fcc.myworktime.ui.utils.DatePickerFragment
 import com.fcc.myworktime.ui.utils.EventData
 import com.fcc.myworktime.ui.utils.LifeCycleOwnerFragment
@@ -29,13 +30,13 @@ class AddWorkFragment : LifeCycleOwnerFragment(), AddWorkView {
             return f
         }
     }
-    private lateinit var okMenu: MenuItem
-
-
-    private lateinit var cancelMenu: MenuItem
+//    private lateinit var okMenu: MenuItem
+//
+//
+//    private lateinit var cancelMenu: MenuItem
     lateinit var binding : AutoClearedValue<FragmentAddWorkBinding>
 
-    private val okClickEvent = PublishSubject.create<Any>()
+//    private val okClickEvent = PublishSubject.create<Any>()
     private val cancelClickEvent = PublishSubject.create<Any>()
     private var lifeCycleEvents = PublishSubject.create<EventData>()
     @Inject lateinit var  presenter : AddWorkPresenter
@@ -47,7 +48,7 @@ class AddWorkFragment : LifeCycleOwnerFragment(), AddWorkView {
         val b = DataBindingUtil.inflate<FragmentAddWorkBinding>(inflater, R.layout.fragment_add_work, container, false)
         binding = AutoClearedValue(this, b)
 
-        setHasOptionsMenu(true)
+//        setHasOptionsMenu(true)
 
 
         presenter.bindView(this)
@@ -63,25 +64,25 @@ class AddWorkFragment : LifeCycleOwnerFragment(), AddWorkView {
         return b.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, menuInflater: MenuInflater?) {
-        menuInflater!!.inflate(R.menu.menu_add_work, menu)
-        okMenu = menu!!.findItem(R.id.action_ok)
-        cancelMenu = menu.findItem(R.id.action_cancel)
-        super.onCreateOptionsMenu(menu, menuInflater)
-    }
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item!!.itemId) {
-            R.id.action_ok -> {
-                okClickEvent.onNext("")
-                true
-            }
-            R.id.action_cancel ->{
-                cancelClickEvent.onNext("")
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?, menuInflater: MenuInflater?) {
+//        menuInflater!!.inflate(R.menu.menu_add_work, menu)
+//        okMenu = menu!!.findItem(R.id.action_ok)
+//        cancelMenu = menu.findItem(R.id.action_cancel)
+//        super.onCreateOptionsMenu(menu, menuInflater)
+//    }
+//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+//        return when (item!!.itemId) {
+//            R.id.action_ok -> {
+//                okClickEvent.onNext("")
+//                true
+//            }
+//            R.id.action_cancel ->{
+//                cancelClickEvent.onNext("")
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
     override fun onDestroyView() {
         lifeCycleEvents.onNext(EventData(null, MainView.EVENT_DESTROYED))
@@ -89,7 +90,7 @@ class AddWorkFragment : LifeCycleOwnerFragment(), AddWorkView {
     }
 
     override fun okClickObservable(): Observable<Any> {
-        return okClickEvent
+        return RxView.clicks(binding.get()!!.fab)
     }
 
     override fun cancelClickObservable(): Observable<Any> {
@@ -122,9 +123,9 @@ class AddWorkFragment : LifeCycleOwnerFragment(), AddWorkView {
     override fun setProjectName(projectName: String) {
         binding.get()!!.txtProject.setText( projectName )
     }
-    override fun printDatePicker(title:String) {
+    override fun printDatePicker(dialogTitle:String) {
 
-        datePikerDialog.show(fragmentManager, title)
+        datePikerDialog.show(fragmentManager, dialogTitle)
 
 
     }

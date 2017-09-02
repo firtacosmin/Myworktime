@@ -65,10 +65,27 @@ class LoginPresenter @Inject constructor(
 
     private fun loginClicked() {
 
-        loginModelDisposable = model.login(view.getEmail(), view.getPassword()).subscribe({
-            loginData -> loginResponse(loginData)
-        })
-        view.printLoading()
+        var error = false
+        if ( view.getEmail().isEmpty() ){
+            error = true
+            view.printEmailError(messages.field_empty_error!!)
+        }else{
+            view.printEmailError("")
+        }
+        if ( view.getPassword().isEmpty() ){
+            error = true
+            view.printPassError(messages.field_empty_error!!)
+        }else{
+            view.printPassError("")
+        }
+
+
+        if ( !error ) {
+            loginModelDisposable = model.login(view.getEmail(), view.getPassword()).subscribe({ loginData ->
+                loginResponse(loginData)
+            })
+            view.printLoading()
+        }
 
     }
 

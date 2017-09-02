@@ -15,5 +15,7 @@ interface LoginView :MainView{
     fun getPassword(): String
     fun printError(loginErrorMessage: String?)
     fun printLoading()
+    fun printPassError(s: String)
+    fun printEmailError(s: String)
 
 }
