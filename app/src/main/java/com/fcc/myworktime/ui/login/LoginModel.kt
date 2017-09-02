@@ -6,8 +6,6 @@ import com.fcc.myworktime.data.UserData
 import com.fcc.myworktime.data.database.User
 import com.fcc.myworktime.utils.Resource
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.database.DatabaseReference
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
@@ -17,10 +15,10 @@ import javax.inject.Inject
  * Created by firta on 8/31/2017.
  * The class that will provide the interaction of the [LoginPresenter] with the data
  */
-class LoginModel @Inject constructor(
+open class LoginModel @Inject constructor(
         var auth:Auth,
-        var userDAO: UserDAO,
-        var uData:UserData
+        private var userDAO: UserDAO,
+        private var uData:UserData
 ){
 
     private var loginEvents = PublishSubject.create<Resource<String>>()
@@ -28,7 +26,7 @@ class LoginModel @Inject constructor(
 
 
     fun login(email:String, pass:String):Observable<Resource<String>>{
-        auth.login(email, pass, OnCompleteListener<AuthResult> {
+        auth.login(email, pass, OnCompleteListener {
             task ->
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information

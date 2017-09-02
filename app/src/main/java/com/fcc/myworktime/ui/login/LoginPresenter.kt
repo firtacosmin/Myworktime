@@ -15,7 +15,7 @@ import javax.inject.Inject
  */
 class LoginPresenter @Inject constructor(
         var navigator: Navigator,
-        var model:LoginModel,
+        private var model:LoginModel,
         var messages: Messages
 ){
 

@@ -21,7 +21,7 @@ class RegistrationPresenter @Inject constructor(
     private lateinit var view: RegistrationView
     private val subscriptions = CompositeDisposable()
 
-    private lateinit var modelDisposable: Disposable
+    private var modelDisposable: Disposable? = null
 
     fun bindView(v:RegistrationView){
         view = v
@@ -38,7 +38,9 @@ class RegistrationPresenter @Inject constructor(
         when{
             viewData.event == MainView.EVENT_DESTROYED->{
                 subscriptions.clear()
-                modelDisposable.dispose()
+                if ( modelDisposable != null && !modelDisposable!!.isDisposed ){
+                    modelDisposable?.dispose()
+                }
             }
         }
 
@@ -54,23 +56,32 @@ class RegistrationPresenter @Inject constructor(
             view.printEmailError("")
         }
 
-        if (view.getPassword().isEmpty()) {
-            error = true
-            view.printPassError(messages.field_empty_error!!)
-        } else if (view.getRePassword().isEmpty()){
-            error = true
-            view.printRePassError(messages.field_empty_error!!)
-        }else if ( view.getPassword() != view.getRePassword() ) {
-            error = true
-            view.printPassError("")
-            view.printRePassError(messages.passwords_not_thesame!!)
-        }else{
-            view.printPassError("")
-            view.printRePassError("")
+        when {
+            view.getPassword().isEmpty() -> {
+                error = true
+                view.printPassError(messages.field_empty_error!!)
+            }
+            view.getRePassword().isEmpty() -> {
+                error = true
+                view.printPassError("")
+                view.printRePassError(messages.field_empty_error!!)
+            }
+            view.getPassword() != view.getRePassword() -> {
+                error = true
+                view.printPassError("")
+                view.printRePassError(messages.passwords_not_thesame!!)
+            }
+            else -> {
+                view.printPassError("")
+                view.printRePassError("")
+            }
         }
 
         if ( !error ){
             view.printLoading()
+            if ( modelDisposable != null && !modelDisposable!!.isDisposed ){
+                modelDisposable?.dispose()
+            }
             modelDisposable = model.getRegistrationEvents().subscribe { response -> responseFromRegistration(response) }
             model.registerUser(view.getEmail(), view.getPassword())
         }
@@ -94,7 +105,6 @@ class RegistrationPresenter @Inject constructor(
     }
 
     private fun registrationOK() {
-        modelDisposable.dispose()
         navigator.goToProjects()
     }
 

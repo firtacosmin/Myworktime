@@ -11,6 +11,7 @@ import com.fcc.myworktime.ui.projectdetails.DetailsFragment
 import com.fcc.myworktime.ui.projects.ProjectsFragment
 import com.fcc.myworktime.ui.projects.addproject.ProjectsAddDialog
 import com.fcc.myworktime.ui.registration.RegistrationFragment
+import com.fcc.myworktime.utils.Consts
 import javax.inject.Inject
 
 /**
@@ -40,8 +41,9 @@ class Navigator @Inject constructor(act: MainActivity){
         ProjectsAddDialog().show(fManager, "")
     }
 
-    fun openProjectDetails(data: Bundle) {
-
+    fun openProjectDetails(project:String) {
+        val data = Bundle()
+        data.putString(Consts.DETAILS_DISPLAYED_PROJECT_ID, project)
         val f = DetailsFragment.getInstance(data)
         openFragment(f, true)
 

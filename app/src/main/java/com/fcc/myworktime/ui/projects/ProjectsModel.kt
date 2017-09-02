@@ -24,7 +24,7 @@ class ProjectsModel @Inject constructor(
 
     private val TAG: String = "ProjectsModel"
 
-    val projectsObservable:PublishSubject<Resource<List<String>>> = PublishSubject.create()
+    private val projectsObservable:PublishSubject<Resource<List<String>>> = PublishSubject.create()
 
     var disposable:Disposable = uData.getProjectChangesObservable().subscribe { projectChanged() }
 
@@ -42,6 +42,10 @@ class ProjectsModel @Inject constructor(
             projDAO.getProjects(uData.dbUser!!.id).subscribe{projects -> gotProjects(projects)}
         }
 
+        return projectsObservable
+    }
+
+    fun getProjectsObservable():Observable<Resource<List<String>>>{
         return projectsObservable
     }
     fun deleteProject(position: Int){

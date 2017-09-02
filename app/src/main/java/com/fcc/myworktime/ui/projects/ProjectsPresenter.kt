@@ -1,10 +1,8 @@
 package com.fcc.myworktime.ui.projects
 
-import android.os.Bundle
 import com.fcc.myworktime.ui.navigation.Navigator
 import com.fcc.myworktime.ui.utils.EventData
 import com.fcc.myworktime.ui.utils.MainView
-import com.fcc.myworktime.utils.Consts
 import com.fcc.myworktime.utils.Messages
 import com.fcc.myworktime.utils.Resource
 import io.reactivex.disposables.CompositeDisposable
@@ -36,10 +34,10 @@ class ProjectsPresenter @Inject constructor(
         subscriptions.add(v.projectClicked().subscribe { position -> clickedProject(position) })
         subscriptions.add(v.observableFabClick().subscribe { _ -> fabClicked() })
         subscriptions.add(v.viewEvent().subscribe{eventData -> viewStateChange(eventData)})
-        subscriptions.add(model.projectsObservable.subscribe{result -> gotData(result)})
         subscriptions.add(v.observableDeleteItem().subscribe { position -> removeItem(position) })
         subscriptions.add(v.observableEditItem().subscribe{position -> editItem(position)})
         subscriptions.add(v.observableConfirmDlgOkClick().subscribe { removalConfirmed() })
+        subscriptions.add(model.getProjectsObservable().subscribe{result -> gotData(result)})
     }
 
     private fun removalConfirmed() {
@@ -109,9 +107,7 @@ class ProjectsPresenter @Inject constructor(
     private fun clickedProject(position: Int) {
 
         val project:String = model.getProjectID(position)
-        val data = Bundle()
-        data.putString(Consts.DETAILS_DISPLAYED_PROJECT_ID, project)
-        navigator.openProjectDetails(data)
+        navigator.openProjectDetails(project)
 
     }
 
