@@ -29,6 +29,7 @@ class UserDAO @Inject constructor(@UsersDbRef val mUserDbRef: DatabaseReference)
 
         val user = User()
         user.email = email
+        user.id = System.currentTimeMillis().toString()
         mUserDbRef.child(System.currentTimeMillis().toString()).setValue(user)
     }
 

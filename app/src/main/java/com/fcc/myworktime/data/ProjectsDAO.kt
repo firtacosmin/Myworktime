@@ -28,14 +28,14 @@ class ProjectsDAO @Inject constructor(@ProjectsDbRef val projectsDbRef: Database
     fun addFirstProject(name:String, userID:String):Projects{
         val entryID = System.currentTimeMillis().toString()
         val projects = Projects()
-        projects.projectsID = entryID
+        projects.projectsID = userID
         projects.userid = userID
         val proj = Project()
         proj.name = name
         proj.id = entryID
         projects.projects.put(proj.id, proj)
 
-        projectsDbRef.child(entryID).setValue(projects)
+        projectsDbRef.child(userID).setValue(projects)
 
         return projects
 
@@ -92,7 +92,7 @@ class ProjectsDAO @Inject constructor(@ProjectsDbRef val projectsDbRef: Database
 
                     projectsObservable.onNext(Resource.success(projects!!))
                 }else{
-                    projectsObservable.onNext(Resource.error(PROJECTS_ERROR_GETTING_DATA, null))
+                    projectsObservable.onNext(Resource.error(PROJECTS_NO_PROJECTS_ERROR, null))
                 }
             }
 

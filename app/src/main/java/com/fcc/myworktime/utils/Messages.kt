@@ -27,5 +27,10 @@ class Messages @Inject constructor(
     val current_work_text: String? = c.getString(R.string.current_work_text)
     val hours_small: String? = c.getString(R.string.hours_small)
     val work_in_progress: String? = c.getString(R.string.work_in_progress)
+    val passwords_not_thesame: String? = c.getString(R.string.passwords_not_the_same)
+    val user_collision_error: String? = c.getString(R.string.user_collision_error)
+    val weak_pass_error: String? = c.getString(R.string.weak_pass_error)
+    val invalid_email_error: String? = c.getString(R.string.invalid_email_error)
+    val error_while_registering: String? = c.getString(R.string.error_while_registering)
 
 }

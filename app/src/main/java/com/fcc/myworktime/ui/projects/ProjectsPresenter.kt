@@ -78,11 +78,14 @@ class ProjectsPresenter @Inject constructor(
             if ( result.data!!.isEmpty() ){
                 view.hideLoading()
                 view.displayMessage(messages.no_projects_message!!)
+                view.displayFab()
             }else {
                 displayedElements = result.data
                 view.hideLoading()
                 view.displayList(displayedElements)
                 view.displayFab()
+                view.displayMessage("")
+
             }
         }else {
             view.hideLoading()
