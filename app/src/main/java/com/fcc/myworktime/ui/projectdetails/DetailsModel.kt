@@ -5,7 +5,9 @@ import com.fcc.myworktime.data.UserData
 import com.fcc.myworktime.data.WorkDAO
 import com.fcc.myworktime.data.database.Work
 import com.fcc.myworktime.utils.Consts
+import com.fcc.myworktime.utils.Messages
 import com.fcc.myworktime.utils.Utils
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -14,9 +16,13 @@ import javax.inject.Inject
  */
 class DetailsModel @Inject constructor(
         val uData:UserData,
-        val workDAO: WorkDAO
+        val workDAO: WorkDAO,
+        val messages: Messages
 ) {
     var projectID = ""
+
+    var projectName: String = ""
+    var projectTotalHours: Double = 0.0
 
 
     fun getListOfWork():List<String>{
@@ -28,7 +34,28 @@ class DetailsModel @Inject constructor(
 
     fun getDataFromBundle(data: Bundle) {
         projectID = data.getString(Consts.DETAILS_DISPLAYED_PROJECT_ID,"")
+        projectName = uData.dbProjects!!.projects[projectID]!!.name
+        calculateTotalHours()
     }
+
+    private fun calculateTotalHours() {
+        var hours = 0.0
+        uData.dbProjects!!.projects[projectID]!!.work.forEach {
+            if ( it.value.hours != 0.0 ){
+                /*if we have hours then add them*/
+                hours+=it.value.hours
+            }else{
+                /*if we don't have hours then calculate the hours depending on the start and end*/
+                if ( it.value.end > 0 && it.value.start < it.value.end){
+                    hours += Utils.getHoursFromMillis(it.value.end - it.value.start)
+                }
+            }
+        }
+
+        projectTotalHours = hours
+    }
+
+
 
     fun isWorkStarted():Boolean{
         val lastWork = getLastWork()
@@ -53,6 +80,7 @@ class DetailsModel @Inject constructor(
         val time = System.currentTimeMillis()
         work.start = time
         work.end = 0L
+        work.activity = WorkDAO.DB_WORK_ACTIVITY_DEFAULT_VALUE
         if ( uData.dbProjects!!.projects[projectID]!!.work.isEmpty()  ){
             addFirstWorkToDAO(work)
         }else {
@@ -67,9 +95,17 @@ class DetailsModel @Inject constructor(
 
         val workMap = uData.dbProjects!!.projects[projectID]!!.work
         val idInList = getIdOfPosition(position)
-        workMap.remove(idInList)
+        val removedWork = workMap.remove(idInList)
         addWorkMapToDAO()
+        if ( removedWork != null && removedWork.end > 0 && removedWork.start < removedWork.end){
+            projectTotalHours -= Utils.getHoursFromMillis(removedWork.end - removedWork.start)
+        }
 
+    }
+
+    fun getWorkForPosition(positionInList:Int):Work?{
+        val idInList = getIdOfPosition(positionInList)
+        return uData.dbProjects!!.projects[projectID]!!.work[idInList]
     }
 
 
@@ -84,7 +120,7 @@ class DetailsModel @Inject constructor(
             return uData.dbProjects!!.projects[projectID]!!.work[lastKey]
         }
     }
-    private fun getIdOfPosition(position: Int): String {
+    fun getIdOfPosition(position: Int): String {
 
         var id = ""
         val map = uData.dbProjects!!.projects[projectID]!!.work
@@ -99,7 +135,17 @@ class DetailsModel @Inject constructor(
 
     }
     private fun createString(work:Work):String{
-        return "${Utils.getDate(work.start)}\n-\n${Utils.getDate(work.end)}"
+        if ( work.end == 0L ){
+            /*if work in progress*/
+            return messages.work_in_progress + work.activity
+        }else {
+            var hours = work.hours
+            if (hours == 0.0) {
+                hours = Utils.getHoursFromMillis(work.end - work.start)
+            }
+            return "Worked on ${work.activity} for $hours hours"
+        }
+//        return "${Utils.getDate(work.start)}\n-\n${Utils.getDate(work.end)}"
     }
 
     private fun addWorkToDAO(work:Work){

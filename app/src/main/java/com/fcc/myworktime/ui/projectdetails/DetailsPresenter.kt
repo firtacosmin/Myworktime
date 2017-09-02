@@ -6,7 +6,6 @@ import com.fcc.myworktime.ui.utils.EventData
 import com.fcc.myworktime.ui.utils.MainView
 import com.fcc.myworktime.utils.Consts
 import com.fcc.myworktime.utils.Messages
-import com.fcc.myworktime.utils.Utils
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -30,6 +29,17 @@ class DetailsPresenter @Inject constructor(
         subscriptions.add(view.viewEvent().subscribe { viewState -> viewChangedState(viewState) })
         subscriptions.add(view.deleteClickedObservable().subscribe { position -> deleteWorkOnPosition(position) })
         subscriptions.add(view.addClickedObservable().subscribe { addNewWork() })
+        subscriptions.add(view.itemClickedObservable().subscribe { position -> itemClicked(position) })
+    }
+
+    private fun itemClicked(position: Int) {
+
+        val workID = model.getIdOfPosition(position)
+        val data:Bundle = Bundle()
+        data.putString(Consts.DETAILS_DISPLAYED_PROJECT_ID, model.projectID)
+        data.putString(Consts.DETAILS_DISPLAYED_WORK_ID, workID)
+        navigator.openAddWorkFragment(data)
+
     }
 
     private fun addNewWork() {
@@ -45,6 +55,7 @@ class DetailsPresenter @Inject constructor(
 
         model.deleteWorkAt(position)
         view.removeItem(position)
+        printTextIntoView()
 
     }
 
@@ -65,29 +76,34 @@ class DetailsPresenter @Inject constructor(
     }
 
     private fun switchStateClicked() {
-
+        var newItem = ""
         if ( model.isWorkStarted() ){
-            val newItem:String = model.endWork()
+            newItem = model.endWork()
             view.updateFirstElement(newItem)
-            view.displayState(messages.work_state_ended!!)
-            view.displayButtonText(messages.work_btn_start!!)
         }else{
-            val newItem:String = model.startWork()
+            newItem = model.startWork()
             view.addItemToList(newItem)
-            view.displayState(messages.work_state_started!!)
-            view.displayButtonText(messages.work_btn_end!!)
         }
+        printDataIntoView()
 
     }
 
     private fun printDataIntoView() {
         val dataToPrint = model.getListOfWork()
         view.listItems(dataToPrint)
+        printTextIntoView()
+    }
+
+    private fun printTextIntoView(){
+        val projectName = model.projectName
+        val projectTotalHours:Double = model.projectTotalHours
         if ( model.isWorkStarted() ){
-            view.displayState(messages.work_state_started!!)
+            view.displayState(messages.work_state_started!!+projectName)
+            view.displayCurrentWork(messages.current_work_text!!+" "+projectTotalHours+" "+messages.hours_small)
             view.displayButtonText(messages.work_btn_end!!)
         }else{
-            view.displayState(messages.work_state_ended!!)
+            view.displayState(messages.work_state_ended!!+projectName)
+            view.displayCurrentWork(messages.current_work_text!!+" "+projectTotalHours+" "+messages.hours_small)
             view.displayButtonText(messages.work_btn_start!!)
         }
     }

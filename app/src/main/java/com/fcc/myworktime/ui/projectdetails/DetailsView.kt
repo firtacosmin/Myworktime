@@ -12,8 +12,10 @@ interface DetailsView:MainView {
     fun deleteClickedObservable():Observable<Int>
     fun editClickedObservable():Observable<Int>
     fun addClickedObservable():Observable<Any>
+    fun itemClickedObservable():Observable<Int>
 
     fun displayState(state:String)
+    fun displayCurrentWork(work:String)
     fun displayButtonText(text:String)
     fun listItems(items :List<String>)
     fun addItemToList(item:String)

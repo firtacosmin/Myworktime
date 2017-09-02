@@ -15,9 +15,13 @@ class WorkDAO @Inject constructor(
 ) {
     companion object {
         val DB_OBJECT_NAME = "work"
+        val DB_WORK_ACTIVITY_DEFAULT_VALUE = "Quick activity"
     }
 
     fun addWork(work:Work, projectID:String, userID:String){
+
+
+
 
         projectsDbRef
                 .child(userID)

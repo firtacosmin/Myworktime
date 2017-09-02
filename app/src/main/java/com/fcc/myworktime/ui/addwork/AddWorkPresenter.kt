@@ -60,7 +60,14 @@ class AddWorkPresenter @Inject constructor(
     private fun printDataIntoView() {
 
         view.setProjectName(model.getProjectName())
-        view.setDate(Utils.getSmallDate(System.currentTimeMillis()))
+        if ( model.getWorkDate().isEmpty() ) {
+            view.setDate(Utils.getSmallDate(System.currentTimeMillis()))
+        }else{
+            view.setDate(model.getWorkDate())
+        }
+        view.setDescription(model.getWorkDesc())
+        view.setActivity(model.getWorkActivity())
+        view.setHours(model.getWorkHours())
 
     }
 

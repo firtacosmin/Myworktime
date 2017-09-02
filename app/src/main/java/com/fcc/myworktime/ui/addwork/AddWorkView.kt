@@ -21,6 +21,9 @@ interface AddWorkView: MainView {
 
     fun setProjectName(projectName:String)
     fun setDate(date:String)
+    fun setActivity(activity:String)
+    fun setHours(hours:String)
+    fun setDescription(desc:String)
 
     fun setDateError(err:String)
     fun setActivityError(err:String)

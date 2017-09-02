@@ -34,6 +34,24 @@ object Utils {
         val d = SimpleDateFormat(SMALL_DATE_FORMAT, Locale.ENGLISH).parse(date)
         return d.time
     }
+    fun getHoursFromMillis(millis: Long): Double {
+
+        val c = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+        c.timeInMillis = millis
+
+        var h:Double = c.get(Calendar.HOUR_OF_DAY).toDouble()
+        val m = c.get(Calendar.MINUTE)
+
+        h += m/60
+        return h
+
+    }
+
+    fun hoursToMillis(hours: Double): Long {
+
+        return hours.toLong()*60*60*1000
+
+    }
 
 
 }

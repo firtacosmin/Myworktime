@@ -24,4 +24,8 @@ class Messages @Inject constructor(
     val remove_project_dialog_message: String? = c.getString(R.string.remove_project_dialog_message)
     val date_piker_title: String? = c.getString(R.string.date_piker_title)
     val field_empty_error: String? = c.getString(R.string.field_empty_error)
+    val current_work_text: String? = c.getString(R.string.current_work_text)
+    val hours_small: String? = c.getString(R.string.hours_small)
+    val work_in_progress: String? = c.getString(R.string.work_in_progress)
+
 }

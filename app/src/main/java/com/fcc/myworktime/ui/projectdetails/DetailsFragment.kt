@@ -20,6 +20,9 @@ import javax.inject.Inject
  *
  */
 class DetailsFragment: LifeCycleOwnerFragment(),DetailsView {
+
+
+
     companion object {
 
 
@@ -67,6 +70,9 @@ class DetailsFragment: LifeCycleOwnerFragment(),DetailsView {
     override fun switchStateClickObservable(): Observable<Any> {
         return RxView.clicks(binding.get()!!.btnSwitchState)
     }
+    override fun itemClickedObservable(): Observable<Int> {
+        return adapter.itemClickedEvent
+    }
 
     override fun displayState(state: String) {
         binding.get()!!.txtCurrentState.text = state
@@ -74,6 +80,12 @@ class DetailsFragment: LifeCycleOwnerFragment(),DetailsView {
 
     override fun displayButtonText(text: String) {
         binding.get()!!.btnSwitchState.text = text
+    }
+
+    override fun displayCurrentWork(work: String) {
+
+        binding.get()!!.txtTotalHours.text = work
+
     }
 
     override fun listItems(items: List<String>) {

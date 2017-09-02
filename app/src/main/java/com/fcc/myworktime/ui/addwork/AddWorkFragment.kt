@@ -23,6 +23,7 @@ import javax.inject.Inject
  */
 class AddWorkFragment : LifeCycleOwnerFragment(), AddWorkView {
 
+
     companion object {
         fun getInstance(data:Bundle): AddWorkFragment {
             val f = AddWorkFragment()
@@ -137,6 +138,17 @@ class AddWorkFragment : LifeCycleOwnerFragment(), AddWorkView {
 
         binding.get()!!.txtDate.setText( date )
 
+    }
+    override fun setActivity(activity: String) {
+        binding.get()!!.txtActivity.setText( activity )
+    }
+
+    override fun setHours(hours: String) {
+        binding.get()!!.txtHours.setText( hours )
+    }
+
+    override fun setDescription(desc: String) {
+        binding.get()!!.txtDescription.setText( desc )
     }
     override fun setDateError(err: String) {
         if ( err.isEmpty() ){
