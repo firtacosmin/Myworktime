@@ -25,12 +25,28 @@ class Navigator @Inject constructor(act: MainActivity){
 
     var fManager:FragmentManager = act.supportFragmentManager
 
+    val projectsListTransaction = "projectsListTransaction"
+    val loginTransaction = "loginTransaction"
+
+
     fun goToLogin(){
-        openFragment(LoginFragment())
+
+        clearBackStack(projectsListTransaction)
+        openFragment(LoginFragment(), true, loginTransaction)
+    }
+
+    private fun clearBackStack(tag:String) {
+
+//        val count = fManager.backStackEntryCount
+//        for ( i in 0..count)
+//        {
+            fManager.popBackStack(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//        }
     }
 
     fun goToProjects(){
-        openFragment(ProjectsFragment())
+        clearBackStack(loginTransaction)
+        openFragment(ProjectsFragment(), true, projectsListTransaction)
     }
 
     fun goToRegistration(){
@@ -55,7 +71,7 @@ class Navigator @Inject constructor(act: MainActivity){
      */
     fun onBackPressed():Boolean {
 
-        if ( fManager.backStackEntryCount > 0 ) {
+        if ( fManager.backStackEntryCount > 1 ) {
             popBackStack()
             return true
         }
@@ -67,11 +83,11 @@ class Navigator @Inject constructor(act: MainActivity){
         fManager.popBackStack()
     }
 
-    private fun openFragment(f:Fragment, addToBackStack:Boolean = false){
+    private fun openFragment(f:Fragment, addToBackStack:Boolean = false, backstackTag:String? = null){
         val transaction = fManager.beginTransaction()
                 .replace(destinationID,f)
         if ( addToBackStack ){
-            transaction.addToBackStack(null)
+            transaction.addToBackStack(backstackTag)
         }
         transaction.commit()
     }
