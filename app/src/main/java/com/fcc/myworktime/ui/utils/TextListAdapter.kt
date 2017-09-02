@@ -38,10 +38,10 @@ class TextListAdapter : RecyclerView.Adapter<TextListAdapter.ListItemSimpleViewH
 
     override fun onBindViewHolder(holderSimple: ListItemSimpleViewHolder?, position: Int) {
 
-        holderSimple?.setText(itemList[position])
-        RxView.clicks(holderSimple!!.itemView).subscribe{itemClickedEvent.onNext(position)}
-        RxView.clicks(holderSimple.binding.imgDelete).subscribe{deleteClickedEvent.onNext(position)}
-        RxView.clicks(holderSimple.binding.imgEdit).subscribe{editClickedEvent.onNext(position)}
+        holderSimple?.setText(itemList[holderSimple.adapterPosition])
+        RxView.clicks(holderSimple!!.itemView).subscribe{itemClickedEvent.onNext(holderSimple.adapterPosition)}
+        RxView.clicks(holderSimple.binding.imgDelete).subscribe{deleteClickedEvent.onNext(holderSimple.adapterPosition)}
+        RxView.clicks(holderSimple.binding.imgEdit).subscribe{editClickedEvent.onNext(holderSimple.adapterPosition)}
 
 
     }
